@@ -8,24 +8,76 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    @State var image: String = Constants.randomImage
+    
     var body: some View {
         NavigationStack
         {
-            VStack
+            VStack(spacing: 8)
             {
-                Text("Welcome")
-                    .frame(maxHeight: .infinity)
+                ImageLoaderView(urlString: image)
+                    .ignoresSafeArea()
+             titleSection
+                .padding(.top,24)
                 
-                NavigationLink{
-                  OnboardingCompletedView()
-                } label: {
-                    Text("Get Started")
-                        .callToActionButton()
-                }
+                
+                ctaButtons
+                .padding(16)
+                
+              
+            }
+      
+         
+        }
+    }
+}
+
+private var titleSection: some View{
+    VStack(spacing: 8){
+        Text("AI Chat 🤙")
+            .font(.largeTitle)
+            .fontWeight(.semibold)
+        
+        Text("Youtube @ BulutServisleri")
+            .font(.caption)
+            .fontWeight(.semibold)
+    }
+}
+
+private var ctaButtons: some View{
+    VStack(spacing:8){
+        
+        NavigationLink{
+            OnboardingCompletedView()
+        } label: {
+            Text("Get Started")
+                .callToActionButton()
+        }
+        Text("Already have an account? Sign in!")
+            .underline()
+            .font(.body)
+            .padding(8)
+            .tappableBackground()
+            .onTapGesture {
                 
             }
-            .padding(16)
-         
+     
+    }
+}
+private var policyLinks: some View {
+    HStack(spacing: 8)
+    {
+        Link(destination: URL(string: Constants.termsOfServiceUrl)!) {
+            Text("Terms of Service")
+        }
+        
+        Circle()
+            .fill(.accent)
+            .frame(width: 4, height: 4)
+        
+        Link(destination: URL(string:
+            Constants.privacyPolicyUrl)!) {
+            Text("Privacy Policy")
         }
     }
 }
